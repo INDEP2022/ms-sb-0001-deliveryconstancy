@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "8e6c9093-bbbe-4b05-bea8-45e6a496fdbb",
+		"name": "DeliveryConstancy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6130285"
+	},
+	"item": [
+		{
+			"name": "views",
+			"item": [
+				{
+					"name": "aclaration-view",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/detail-inventory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"detail-inventory"
+							],
+							"query": [
+								{
+									"key": "filter.managementNumber",
+									"value": "14",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
