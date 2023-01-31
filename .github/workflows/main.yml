@@ -3,7 +3,7 @@ on: [ push ]
 
 jobs:
   build:
-    name: Build the Code
+    name: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
     # Webhook URL from Discord
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
     # Title for card
-          title: 'Build result: ${{ steps.build.outputs.status }}'
+          title: 'Build result: ${{ steps }}'
     # Content of card
           message: 'Author: ${{ github.actor }} Commit: ${{ github.sha }} Message: ${{ github.event.pull_request.head.ref }} ${{ github.event.pull_request.head.sha }} Build URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
     # If action is used in a pull request, attach the preview image for it to the card. Required for custom_image_url
