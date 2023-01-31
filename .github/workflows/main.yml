@@ -29,7 +29,7 @@ jobs:
         if: failure() && steps.test-app.outcome != 'success'
         run: |
          echo "Run action-slack"
-         echo "Result of test-app was '${{ steps }}'"
+         echo "Result of test-app was '${{ job-1 }}'"
       - name: Debug
         run: |
          echo "Steps object: "
