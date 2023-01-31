@@ -1,0 +1,25 @@
+name: Build and notify
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build project
+      run: |
+        # build commands here
+
+    - name: Notify on Discord
+      if: success()
+      uses: rtCamp/action-discord-notify@v1
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        MESSAGE: "Build succeeded! 🎉"
