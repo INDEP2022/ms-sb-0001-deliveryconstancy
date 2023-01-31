@@ -1,26 +1,35 @@
-name: Build and Test
-on: [ push ]
-
+name: World Greeter
+on:
+  push:
+    branches: [ master, staging ]
 jobs:
-  build:
-    name: build
+  job-1:
     runs-on: ubuntu-latest
     steps:
-    - name: build
-       id:build
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-    - run: npm ci
-    - run: npm run build
+      - name: Say Hello
+        run: echo "Hello"
+  job-2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say World
+        run: echo "World"
+  slack-workflow-status:
+    if: always()
+    name: Post Workflow Status To Slack
+    needs:
+      - job-1
+      - job-2
+    runs-on: ubuntu-latest
 
 
   notify:
     name: Discord Notification
     runs-on: ubuntu-latest
+    permissions:
+      actions: 'read'
     needs: # make sure the notificatsion is sent AFTER the jobs you want included have completed
-      - build
+      - job-1
+      - job-2
     if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
     
     steps:
@@ -28,7 +37,7 @@ jobs:
         if: failure() && steps.test-app.outcome != 'success'
         run: |
          echo "Run action-slack"
-         echo "Result of test-app was '${{ steps.test-app.outcome }}'"
+         echo "Result of test-app was '${{ jobs }}'"
       - name: Debug
         run: |
          echo "Steps object: "
