@@ -25,8 +25,26 @@ jobs:
     if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
     
     steps:
-      - name: Notify
-        uses: nobrayner/discord-webhook@v1
+      - name: Discord Notify
+        uses: stegzilla/discord-notify@v4
         with:
-          github-token: ${{ secrets.github_token }}
-          discord-webhook: ${{ secrets.DISCORD_WEBHOOK }}
+    # Webhook URL from Discord
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+    # Title for card
+          title: 'Build result: ${{ job.status }}'
+    # Content of card
+          message: 'Author: ${{ github.actor }} Commit: ${{ github.sha }} Message: ${{ github.event.pull_request.head.ref }} ${{ github.event.pull_request.head.sha }} Build URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+    # If action is used in a pull request, attach the preview image for it to the card. Required for custom_image_url
+          include_image: false
+    # Avatar to use for user
+          avatar_url: ''
+    # Username to send message as
+          username: 'GitHub Actions'
+    # Colour for the edge of the card in hex
+          colour: '#3371FF'
+    # Include custom image on card, include_image must be true
+          custom_image_url: ''
+    # Make the title of the card a link
+          title_url: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+
+
