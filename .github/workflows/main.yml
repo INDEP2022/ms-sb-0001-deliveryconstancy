@@ -15,7 +15,7 @@ jobs:
     - name: Debug
       run: |
          echo "Steps object: "
-         echo "${{ steps }}"
+         echo "${{ toJson(steps) }}"
 
   notify:
     name: Discord Notification
