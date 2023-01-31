@@ -19,17 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: 'read'
+    if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
     needs: # make sure the notificatsion is sent AFTER the jobs you want included have completed
       - job-1
       - job-2
-    if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
     
     steps:
       - name: action-slack
         if: failure() && steps.test-app.outcome != 'success'
         run: |
          echo "Run action-slack"
-         echo "Result of test-app was '${{ needs }}'"
+         echo "Result of test-app was '${{ jobs.job-1 }}'"
       - name: Debug
         run: |
          echo "Steps object: "
