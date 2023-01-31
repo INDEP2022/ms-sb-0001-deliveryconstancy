@@ -12,10 +12,7 @@ jobs:
         node-version: 16
     - run: npm ci
     - run: npm run build
-    - name: Debug
-      run: |
-         echo "Steps object: "
-         echo "${{ toJson(steps) }}"
+
 
   notify:
     name: Discord Notification
@@ -25,6 +22,10 @@ jobs:
     if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
     
     steps:
+      - name: Debug
+        run: |
+         echo "Steps object: "
+         echo "${{ toJson(job) }}"
       - name: Discord Notify
         uses: stegzilla/discord-notify@v4
         with:
