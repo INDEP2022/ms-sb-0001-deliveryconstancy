@@ -3,17 +3,9 @@ on:
   push:
     branches: [ main, staging ]
 jobs:
-  job-1:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Say Hello
-        run: echo "Hello"
-  job-2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Say World
-        run: echo "World"
-        
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -25,10 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: 'read'
-    if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
-    needs: # make sure the notificatsion is sent AFTER the jobs you want included have completed
-      - job-1
-      - job-2
+    if: ${{ always() }} 
+    needs:
+      - build
     
     steps:
       - name: action-slack
@@ -44,23 +35,14 @@ jobs:
       - name: Discord Notify
         uses: stegzilla/discord-notify@v4
         with:
-    # Webhook URL from Discord
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-    # Title for card
-          title: 'Build result: ${{ steps }}'
-    # Content of card
+          title: 'Build result: ${{ needs.build.result }}'
           message: 'Author: ${{ github.actor }} Commit: ${{ github.sha }} Message: ${{ github.event.pull_request.head.ref }} ${{ github.event.pull_request.head.sha }} Build URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-    # If action is used in a pull request, attach the preview image for it to the card. Required for custom_image_url
           include_image: false
-    # Avatar to use for user
           avatar_url: ''
-    # Username to send message as
           username: 'GitHub Actions'
-    # Colour for the edge of the card in hex
           colour: '#3371FF'
-    # Include custom image on card, include_image must be true
           custom_image_url: ''
-    # Make the title of the card a link
           title_url: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
 
 
