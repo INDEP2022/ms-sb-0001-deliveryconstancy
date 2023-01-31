@@ -34,6 +34,6 @@ jobs:
           include_image: true
           avatar_url: ''
           username: 'GitHub Actions'
-          colour: if eq(needs.build.result, 'success') }}'#3371FF'${{ else }}'#FF0000'${{ end }}
+          colour: '#3371FF'
           custom_image_url: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
           title_url: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
