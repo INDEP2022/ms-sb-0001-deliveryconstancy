@@ -1,7 +1,7 @@
 name: World Greeter
 on:
   push:
-    branches: [ master, staging ]
+    branches: [ main, staging ]
 jobs:
   job-1:
     runs-on: ubuntu-latest
