@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "6494ec6d-8cb3-46cc-b47f-d6e8fdf87b3d",
+		"name": "comer-ofe-env-value-nsbddb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19564673"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/comer-ofe-env-value-nsbddb?limit=10&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"comer-ofe-env-value-nsbddb"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOne",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/comer-ofe-env-value-nsbddb/9998",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"comer-ofe-env-value-nsbddb",
+						"9998"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"officeID\": \"9998\",\r\n        \"programmingId\": \"4073\",\r\n        \"sendingUsr\": \"JovanniMartinez\",\r\n        \"sendingDate\": \"2020-05-13\",\r\n        \"statusOf\": \"ENVIADO\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/comer-ofe-env-value-nsbddb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"comer-ofe-env-value-nsbddb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"officeID\": \"9998\",\r\n        \"programmingId\": \"4073\",\r\n        \"sendingUsr\": \"JovanniMartinez2\",\r\n        \"sendingDate\": \"2020-05-13\",\r\n        \"statusOf\": \"ENVIADO\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/comer-ofe-env-value-nsbddb/9998",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"comer-ofe-env-value-nsbddb",
+						"9998"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/comer-ofe-env-value-nsbddb/9999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"comer-ofe-env-value-nsbddb",
+						"9999"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
