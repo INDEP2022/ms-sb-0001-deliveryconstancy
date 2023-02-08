@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "166060c1-3807-4af7-a5f4-da5dcdcfbaaf",
+		"name": "certificates-donation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19564673"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-donation?limit=10&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-donation"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOne",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-donation/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-donation",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"certificateId\": 2,\r\n\"progDeliveryId\": 1,\r\n\"creationUser\": \"Jovanni\",\r\n\"userModification\": \"string\",\r\n\"CreationDate\": \"2023-01-01\",\r\n\"dateModification\": \"2023-01-01\",\r\n\"witnessName1\": \"string\",\r\n\"witnessName2\": \"string\",\r\n\"transport\": \"string\",\r\n\"marck\": \"string\",\r\n\"model\": \"string\",\r\n\"color\": \"string\",\r\n\"serie\": \"string\",\r\n\"plates\": \"string\",\r\n\"driverName\": \"string\",\r\n\"folioScale\": \"string\",\r\n\"scaleTotalWeight\": 4,\r\n\"receivedWeight\": 5,\r\n\"granteeName\": \"string\",\r\n\"granteePosition\": \"string\",\r\n\"descTransport\": \"string\",\r\n\"designationName\": \"string\",\r\n\"positionDesignation\": \"string\",\r\n\"receiveDonation\": \"string\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-donation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-donation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"certificateId\": 2,\r\n\"progDeliveryId\": 1,\r\n\"creationUser\": \"Jovanni22\",\r\n\"userModification\": \"string\",\r\n\"CreationDate\": \"2023-01-01\",\r\n\"dateModification\": \"2023-01-01\",\r\n\"witnessName1\": \"string\",\r\n\"witnessName2\": \"string\",\r\n\"transport\": \"string\",\r\n\"marck\": \"string\",\r\n\"model\": \"string\",\r\n\"color\": \"string\",\r\n\"serie\": \"string\",\r\n\"plates\": \"string\",\r\n\"driverName\": \"string\",\r\n\"folioScale\": \"string\",\r\n\"scaleTotalWeight\": 4,\r\n\"receivedWeight\": 5,\r\n\"granteeName\": \"string\",\r\n\"granteePosition\": \"string\",\r\n\"descTransport\": \"string\",\r\n\"designationName\": \"string\",\r\n\"positionDesignation\": \"string\",\r\n\"receiveDonation\": \"string\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-donation/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-donation",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-donation/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-donation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

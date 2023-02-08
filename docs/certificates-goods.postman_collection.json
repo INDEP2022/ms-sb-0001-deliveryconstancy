@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "c37f5223-d881-411f-ba92-8a958239912c",
+		"name": "certificates-goods",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19564673"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-goods?limit=10&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-goods"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOne",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-goods/one?certificateId=9999999&goodsDeliveryScheduleId=99999999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-goods",
+						"one"
+					],
+					"query": [
+						{
+							"key": "certificateId",
+							"value": "9999999"
+						},
+						{
+							"key": "goodsDeliveryScheduleId",
+							"value": "99999999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"certificateId\": \"9999999\",\r\n        \"goodId\": \"5403974\",\r\n        \"quantity\": \"12\",\r\n        \"userCreation\": \"Jovanni\",\r\n        \"userModification\": \"jovannoi\",\r\n        \"creationDate\": \"2022-08-05T17:20:46.000Z\",\r\n        \"modificationDate\": \"2022-08-05T17:20:57.000Z\",\r\n        \"version\": \"1\",\r\n        \"transactionId\": \"999999999\",\r\n        \"siabGoodNum\": \"3944253\",\r\n        \"goodsDeliveryScheduleId\": \"99999999\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-goods",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-goods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"certificateId\": \"9999999\",\r\n        \"goodId\": \"5403974\",\r\n        \"quantity\": \"13\",\r\n        \"userCreation\": \"Jovanni2\",\r\n        \"userModification\": \"jovannoi2\",\r\n        \"creationDate\": \"2022-08-05T17:20:46.000Z\",\r\n        \"modificationDate\": \"2022-08-05T17:20:57.000Z\",\r\n        \"version\": \"1\",\r\n        \"transactionId\": \"999999999\",\r\n        \"siabGoodNum\": \"3944253\",\r\n        \"goodsDeliveryScheduleId\": \"99999999\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-goods?certificateId=9999999&goodsDeliveryScheduleId=99999999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-goods"
+					],
+					"query": [
+						{
+							"key": "certificateId",
+							"value": "9999999"
+						},
+						{
+							"key": "goodsDeliveryScheduleId",
+							"value": "99999999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/certificates-goods?certificateId=9999999&goodsDeliveryScheduleId=99999999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"certificates-goods"
+					],
+					"query": [
+						{
+							"key": "certificateId",
+							"value": "9999999"
+						},
+						{
+							"key": "goodsDeliveryScheduleId",
+							"value": "99999999"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

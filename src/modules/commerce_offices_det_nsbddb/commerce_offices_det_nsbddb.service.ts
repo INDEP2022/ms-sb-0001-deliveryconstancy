@@ -5,32 +5,33 @@ import { PaginateQuery } from 'nestjs-paginate';
 import { ResponseDataDTO } from 'sigebi-lib-common';
 import { Repository } from 'typeorm';
 import { CommonFiltersService } from '../commonFiltersService/common-filters.service';
-import { comerOfiEnvValueNsbddbDto } from './dto/comer_ofi_env_value_nsbddb.dto';
-import { comerOfiEnvValueNsbddbIdDto } from './dto/comer_ofi_env_value_nsbddb_id.dto';
-import { comerOfiEnvValueNsbddbEntity } from './entities/comer_ofi_env_value_nsbddb.entity';
-
+import { commerceOfficesDetNsbddbDto } from './dto/commerce_offices_det_nsbddb.dto';
+import { commerceOfficesDetNsbddbIdDto } from './dto/commerce_offices_det_nsbddb_id.dto';
+import { commerceOfficesDetNsbddbEntity } from './entities/commerce_offices_det_nsbddb.entity';
 @Injectable()
-export class ComerOfeEnvValueNsbddbService {
+export class CommerceOfficesDetNsbddbService {
     constructor(
-        @InjectRepository(comerOfiEnvValueNsbddbEntity) private repository: Repository<comerOfiEnvValueNsbddbEntity>,
+        @InjectRepository(commerceOfficesDetNsbddbEntity) private repository: Repository<commerceOfficesDetNsbddbEntity>,
 
         private commonFiltersService: CommonFiltersService
     ){}
 
 
-    async ComerOfeEnvValueNsbddb(query: PaginateQuery): Promise<ResponseDataDTO<comerOfiEnvValueNsbddbEntity>> {
-        return this.commonFiltersService.paginateFilter<comerOfiEnvValueNsbddbEntity>(query,this.repository,null,'officeID');
+    async commerceOfficesDetNsbddb(query: PaginateQuery): Promise<ResponseDataDTO<commerceOfficesDetNsbddbEntity>> {
+        return this.commonFiltersService.paginateFilter<commerceOfficesDetNsbddbEntity>(query,this.repository,null,'officeID');
     }
 
 
-    async ComerOfeEnvValueNsbddbOne(id: comerOfiEnvValueNsbddbIdDto) {
+    async commerceOfficesDetNsbddbOne(id: commerceOfficesDetNsbddbIdDto) {
 
         let officeID=id.officeID;
+        let goodNum=id.goodNum;
+        let programmingId=id.programmingId;
         try {
-            const exists = await this.repository.findOne({ where: { officeID } })
+            const exists = await this.repository.findOne({ where: { officeID,goodNum,programmingId } })
             if (!exists) return { 
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: 'No se encontró registro para este officeID'
+                message: 'No se encontró registro para este certificateId'
             }
             
                 return {
@@ -51,16 +52,17 @@ export class ComerOfeEnvValueNsbddbService {
     }
 
       //============ POST ============
-      async ComerOfeEnvValueNsbddbPost(sendItem: comerOfiEnvValueNsbddbDto) {
+      async commerceOfficesDetNsbddbPost(sendItem: commerceOfficesDetNsbddbDto) {
         let officeID=sendItem.officeID;
-       
+        let goodNum=sendItem.goodNum;
+        let programmingId=sendItem.programmingId;
         try {
 
-            const exists = await this.repository.findOne({ where: { officeID } })
+            const exists = await this.repository.findOne({ where: { officeID,goodNum,programmingId } })
             if(exists)
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: 'Existe un registro con este officeID',
+                message: 'Existe un registro con este certificateId',
                 count: 0,
                 data:[] 
             }
@@ -80,11 +82,13 @@ export class ComerOfeEnvValueNsbddbService {
     }
 
      //============ PUT ============
-     async ComerOfeEnvValueNsbddbPut({body,id}) {
+     async commerceOfficesDetNsbddbPut({body,id}) {
         
         let officeID=id.officeID;
+        let goodNum=id.goodNum;
+        let programmingId=id.programmingId;
         try{
-            const exists = await this.repository.findOne({ where: { officeID } })
+            const exists = await this.repository.findOne({ where: { officeID,goodNum,programmingId } })
             if(!exists)
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
@@ -94,7 +98,9 @@ export class ComerOfeEnvValueNsbddbService {
             }
 
             delete body.officeID;
-            const data = await this.repository.update(officeID,body)
+            delete body.goodNum;
+            delete body.programmingId;
+            const data = await this.repository.update( { officeID,goodNum,programmingId },body)
 
             if(data)
             return {
@@ -116,17 +122,19 @@ export class ComerOfeEnvValueNsbddbService {
     }
 
     //============ delete ============
-    async ComerOfeEnvValueNsbddbDelete(id:comerOfiEnvValueNsbddbIdDto) {
+    async commerceOfficesDetNsbddbDelete(id:commerceOfficesDetNsbddbIdDto) {
         
         let officeID=id.officeID;
+        let goodNum=id.goodNum;
+        let programmingId=id.programmingId;
         try {
-            const exists = await this.repository.findOne({ where: { officeID } })
+            const exists = await this.repository.findOne({ where: { officeID,goodNum,programmingId } })
             if (!exists) return { 
                 statusCode: HttpStatus.BAD_REQUEST,
                 message: 'No se encontró registro para este id'
             }
 
-            await this.repository.delete(officeID )
+            await this.repository.delete({ officeID,goodNum,programmingId } )
             return { 
                 statusCode: HttpStatus.OK,
                 message: 'Registro eliminado correctamente.',

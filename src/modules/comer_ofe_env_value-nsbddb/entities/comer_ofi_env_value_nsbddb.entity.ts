@@ -1,6 +1,6 @@
-import {Column, PrimaryColumn, PrimaryGeneratedColumn, ViewEntity} from "typeorm"; 
+import {Column, PrimaryColumn, PrimaryGeneratedColumn, Entity} from "typeorm"; 
 
-@ViewEntity("comer_ofi_env_avaluos_nsbddb", { schema: "sae_nsbdb" }) 
+@Entity("comer_ofi_env_avaluos_nsbddb", { schema: "sae_nsbdb" }) 
 export class comerOfiEnvValueNsbddbEntity { 
 
 @PrimaryColumn({ 
