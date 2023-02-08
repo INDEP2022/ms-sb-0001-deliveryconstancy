@@ -83,9 +83,20 @@ export class ComerOfeEnvValueNsbddbController {
        type: [comerOfiEnvValueNsbddbDto],
        required: true
    })
+   @ApiParam({
+    name: "officeID",
+    description: "Id del comer_ofi_env_avaluos_nsbddb a buscar",
+    type: Number,
+    required: true
+})
    @Put("/:officeID")
    async ComerOfeEnvValueNsbddbPut(@Body() body: comerOfiEnvValueNsbddbDto, @Param() id: comerOfiEnvValueNsbddbIdDto) {
-       return this.service.ComerOfeEnvValueNsbddbPut({body,id});
+    if(id.officeID!=body.officeID)
+            return{
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: "El officeID en el enlace http y en el body no coincide ",
+            }   
+    return this.service.ComerOfeEnvValueNsbddbPut({body,id});
    }
 
    @ApiOperation({ summary: 'Eliminar un comer_ofi_env_avaluos_nsbddb por ID' })

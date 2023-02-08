@@ -1,4 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { Logger } from '@nestjs/common/services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
 import { ResponseDataDTO } from 'sigebi-lib-common';
@@ -51,7 +52,18 @@ export class ComerOfeEnvValueNsbddbService {
 
       //============ POST ============
       async ComerOfeEnvValueNsbddbPost(sendItem: comerOfiEnvValueNsbddbDto) {
+        let officeID=sendItem.officeID;
+       
         try {
+
+            const exists = await this.repository.findOne({ where: { officeID } })
+            if(exists)
+            return {
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: 'Existe un registro con este officeID',
+                count: 0,
+                data:[] 
+            }
             const data = await this.repository.save(sendItem)
             return {
                 statusCode: HttpStatus.OK,
@@ -70,7 +82,7 @@ export class ComerOfeEnvValueNsbddbService {
      //============ PUT ============
      async ComerOfeEnvValueNsbddbPut({body,id}) {
         
-        let officeID=body.officeID;
+        let officeID=id.officeID;
         try{
             const exists = await this.repository.findOne({ where: { officeID } })
             if(!exists)
@@ -81,7 +93,7 @@ export class ComerOfeEnvValueNsbddbService {
                 data:[] 
             }
 
-           // delete body.officeID;
+            delete body.officeID;
             const data = await this.repository.update(officeID,body)
 
             if(data)

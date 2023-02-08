@@ -3,21 +3,21 @@ import { IsDate, IsInt, IsNumber, IsNumberString, IsOptional, IsString, Max, Min
 
 export class comerOfiEnvValueNsbddbDto { 
 
-/*
+
 @IsInt({ message: "officeID debe ser un numero entero" })
 @Min(0, { message: "El minimo valor de officeID debe ser 0" })
 //@Max(0, { message: "El maximo valor de officeID debe ser 0" })
 @IsOptional()
 @ApiProperty({ example: "officeID" })
-officeID: number;*/
+officeID: number;
 
-/*
+
 @IsInt({ message: "programmingId debe ser un numero entero" })
 @Min(0, { message: "El minimo valor de programmingId debe ser 0" })
 //@Max(0, { message: "El maximo valor de programmingId debe ser 0" })
 @IsOptional()
 @ApiProperty({ example: "programmingId" })
-programmingId: number;*/
+programmingId: number;
 
 
 @IsString({ message: "sendingUsr debe ser una cadena " })
