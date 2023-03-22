@@ -1,13 +1,13 @@
 
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PaginateQuery } from 'nestjs-paginate';
+import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { certificatesDeliveryService } from './certificates_delivery.service';
 import { certificatesDeliveryDto } from './dto/certificates_delivery.dto';
 import { certificatesDeliveryIdDto } from './dto/certificates_delivery_Id.dto';
 
 @Controller('certificates-delivery')
-@ApiTags('certificates-delivery')
+@ApiTags('constancias_entrega')
 export class CertificatesDeliveryController {
     constructor(private readonly service: certificatesDeliveryService) { }
 
@@ -50,7 +50,7 @@ export class CertificatesDeliveryController {
        required: false
    })
    @Get()
-   async certificatesDelivery(@Query() query: PaginateQuery) {
+   async certificatesDelivery(@Paginate() query: PaginateQuery) {
        return this.service.certificatesDelivery(query);
    }
 

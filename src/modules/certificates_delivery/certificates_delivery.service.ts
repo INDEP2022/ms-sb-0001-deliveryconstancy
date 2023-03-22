@@ -19,11 +19,16 @@ export class certificatesDeliveryService {
         ){}
     
     
-        async certificatesDelivery(query: PaginateQuery): Promise<ResponseDataDTO<certificatesDeliveryEntity>> {
-            return this.commonFiltersService.paginateFilter<certificatesDeliveryEntity>(query,this.repository,null,'certificateId');
+        async certificatesDelivery(query: PaginateQuery){
+            const queryBuilder = this.repository.createQueryBuilder('table');
+            // queryBuilder.leftJoinAndMapOne('table.request', RequestsXInsuranceEntity, 'tbl', 'table.no_solicitud = tbl.no_solicitud');
+              return await this.commonFiltersService.paginateFilter<certificatesDeliveryEntity>(
+                  query,
+                  this.repository,
+                  queryBuilder,
+                  'certificateId',
+              );
         }
-    
-    
         async certificatesDeliveryOne(id: certificatesDeliveryIdDto) {
     
             let certificateId=id.certificateId;
