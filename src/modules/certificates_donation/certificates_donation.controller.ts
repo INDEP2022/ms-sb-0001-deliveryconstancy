@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PaginateQuery } from 'nestjs-paginate';
+import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { certificatesDonationService } from './certificates_donation.service';
 import { certificatesDonationDto } from './dto/certificates_donation.dto';
 import { certificatesDonationIdDto } from './dto/certificates_donation_id.dto';
 
 @Controller('certificates-donation')
-@ApiTags('certificates-donation')
+@ApiTags('constancias_donacion')
 export class CertificatesDonationController {
     constructor(private readonly service: certificatesDonationService) { }
 
@@ -49,8 +49,8 @@ export class CertificatesDonationController {
        required: false
    })
    @Get()
-   async certificatesDonation(@Query() query: PaginateQuery) {
-       return this.service.certificatesDonation(query);
+   async certificatesDonation(@Paginate() query: PaginateQuery) {
+    return this.service.findAllRegisters(query);
    }
 
   

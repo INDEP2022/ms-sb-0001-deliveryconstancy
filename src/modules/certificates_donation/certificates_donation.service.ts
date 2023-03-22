@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
-import { ResponseDataDTO } from 'sigebi-lib-common';
+import { CRUDMessages, ResponseDataDTO } from 'sigebi-lib-common';
 import { Repository } from 'typeorm';
 import { CommonFiltersService } from '../commonFiltersService/common-filters.service';
 import { certificatesDonationDto } from './dto/certificates_donation.dto';
@@ -19,8 +19,15 @@ export class certificatesDonationService {
     ){}
 
 
-    async certificatesDonation(query: PaginateQuery): Promise<ResponseDataDTO<certificatesDonationEntity>> {
-        return this.commonFiltersService.paginateFilter<certificatesDonationEntity>(query,this.repository,null,'certificateId');
+    async findAllRegisters(query: PaginateQuery) {
+        const queryBuilder = this.repository.createQueryBuilder('table');
+      // queryBuilder.leftJoinAndMapOne('table.request', RequestsXInsuranceEntity, 'tbl', 'table.no_solicitud = tbl.no_solicitud');
+        return await this.commonFiltersService.paginateFilter<certificatesDonationEntity>(
+            query,
+            this.repository,
+            queryBuilder,
+            'certificateId',
+        );
     }
 
 
@@ -51,35 +58,45 @@ export class certificatesDonationService {
 
     }
 
-      //============ POST ============
-      async certificatesDonationPost(sendItem: certificatesDonationDto) {
-        let certificateId=sendItem.certificateId;
-       
-        try {
-
-            const exists = await this.repository.findOne({ where: { certificateId } })
-            if(exists)
-            return {
-                statusCode: HttpStatus.BAD_REQUEST,
-                message: 'Existe un registro con este certificateId',
-                count: 0,
-                data:[] 
-            }
-            const data = await this.repository.save(sendItem)
-            return {
+    async findOneRegisterById(id:number) {
+        const value = await this.repository.findOne({ where: {certificateId:id}});
+        return value
+            ? {
                 statusCode: HttpStatus.OK,
-                message: 'Registro guardado correctamente.',
+                message: [CRUDMessages.GetSuccess],
+                data: value,
                 count: 1,
-                data:data  
             }
-        } catch (error) {
-            return  { 
-                statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-                message: "Ocurrio un error al intentar obtener los datos.",
-                }
-        }
+            : {
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: [CRUDMessages.GetNotfound],
+                data: [],
+                count: 0,
+            };
     }
 
+    async certificatesDonationPost(dto: certificatesDonationDto) {
+        try {
+            const exist=  await  this.findOneRegisterById(dto.certificateId)
+            if (exist.count>0) {
+               return {
+                   statusCode: HttpStatus.BAD_REQUEST,
+                   message: ["Ya existe registro"],
+               }
+            }
+               const creation = await this.repository.save(dto);
+               return {
+                   statusCode: HttpStatus.OK,
+                   message: [CRUDMessages.CreateSuccess],
+                   data: creation,
+               }
+           } catch (error) {
+               return {
+                   statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+                   message: [error.message]
+               }
+           }
+    }
      //============ PUT ============
      async certificatesDonationPut({body,id}) {
         

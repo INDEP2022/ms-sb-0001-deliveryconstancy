@@ -18,10 +18,17 @@ export class CertificatesGoodsService {
     ){}
 
 
-    async certificatesGoods(query: PaginateQuery): Promise<ResponseDataDTO<certificatesGoodsEntity>> {
-        return this.commonFiltersService.paginateFilter<certificatesGoodsEntity>(query,this.repository,null,'certificateId');
+   
+    async findAllRegisters(query: PaginateQuery) {
+        const queryBuilder = this.repository.createQueryBuilder('table');
+      // queryBuilder.leftJoinAndMapOne('table.request', RequestsXInsuranceEntity, 'tbl', 'table.no_solicitud = tbl.no_solicitud');
+        return await this.commonFiltersService.paginateFilter<certificatesGoodsEntity>(
+            query,
+            this.repository,
+            queryBuilder,
+            'certificateId',
+        );
     }
-
 
     async certificatesGoodsOne(id: certificatesGoodsIdDto) {
 
