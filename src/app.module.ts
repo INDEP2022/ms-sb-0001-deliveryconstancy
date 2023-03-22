@@ -14,7 +14,7 @@ import { ConfigModule } from '@nestjs/config';
       imports: [
             DeliveryconstancyModule,
             ConfigModule.forRoot({
-                  envFilePath: ['.env'],
+            //      envFilePath: ['.env'],
                   isGlobal: true,
             }),
             TypeOrmModule.forRoot(

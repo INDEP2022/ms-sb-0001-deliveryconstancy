@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PaginateQuery } from 'nestjs-paginate';
+import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { CertificatesGoodsService } from './certificates_goods.service';
 import { certificatesGoodsDto } from './dto/certificates_goods.dto';
 import { certificatesGoodsIdDto } from './dto/certificates_goods_id.dto';
 
 @Controller('certificates-goods')
-@ApiTags('certificates-goods')
+@ApiTags('constancia_bienes')
 export class CertificatesGoodsController {
     constructor(private readonly service: CertificatesGoodsService) { }
 
@@ -55,8 +55,8 @@ export class CertificatesGoodsController {
        required: false
    })
    @Get()
-   async certificatesGoods(@Query() query: PaginateQuery) {
-       return this.service.certificatesGoods(query);
+   async certificatesGoods(@Paginate() query: PaginateQuery) {
+       return this.service.findAllRegisters(query);
    }
 
   

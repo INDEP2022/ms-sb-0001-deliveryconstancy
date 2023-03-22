@@ -1,5 +1,5 @@
 import { NestFactory, Reflector } from '@nestjs/core';
-import { Transport } from '@nestjs/microservices';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 
@@ -35,6 +35,9 @@ async function bootstrap() {
 */
 
 async function bootstrap() {
+  const app_port = process.env.HOST_PORT ? Number(process.env.HOST_PORT) : 3000;
+  const ms_port = process.env.MS_PORT_MICRO ? Number(process.env.MS_PORT_MICRO) : 3001;
+
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
@@ -68,11 +71,20 @@ async function bootstrap() {
     }
   }))
 
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host:'0.0.0.0',
+      port:ms_port
+    },
+  });
+
   await app.startAllMicroservices();
-  await app.listen(`${process.env.MS_PORT}`);
+  await app.listen(app_port);
   logger.log(
-    `🚀 Procedure programminggood service running on port ${process.env.MS_PORT}}`,
+    `🚀 Deliveryconstancy microservice running on port ${app_port}`,
   );
 }
 bootstrap();
+
 
