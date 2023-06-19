@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
-import { ResponseDataDTO } from 'sigebi-lib-common';
 import { Repository } from 'typeorm';
 import { CommonFiltersService } from '../commonFiltersService/common-filters.service';
 import { comerOfiEnvValueNsbddbDto } from './dto/comer_ofi_env_value_nsbddb.dto';
 import { comerOfiEnvValueNsbddbIdDto } from './dto/comer_ofi_env_value_nsbddb_id.dto';
 import { comerOfiEnvValueNsbddbEntity } from './entities/comer_ofi_env_value_nsbddb.entity';
+import { ResponseDataDTO } from 'src/core/interfaces/response.data.dto';
 
 @Injectable()
 export class ComerOfeEnvValueNsbddbService {

@@ -2,7 +2,6 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
-import { ResponseDataDTO } from 'sigebi-lib-common';
 import { Repository } from 'typeorm';
 import { CommonFiltersService } from '../commonFiltersService/common-filters.service';
 import { certificatesGoodsDto } from './dto/certificates_goods.dto';

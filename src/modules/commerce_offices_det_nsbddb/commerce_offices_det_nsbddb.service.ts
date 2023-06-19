@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
-import { ResponseDataDTO } from 'sigebi-lib-common';
 import { Repository } from 'typeorm';
 import { CommonFiltersService } from '../commonFiltersService/common-filters.service';
 import { commerceOfficesDetNsbddbDto } from './dto/commerce_offices_det_nsbddb.dto';
 import { commerceOfficesDetNsbddbIdDto } from './dto/commerce_offices_det_nsbddb_id.dto';
 import { commerceOfficesDetNsbddbEntity } from './entities/commerce_offices_det_nsbddb.entity';
+import { ResponseDataDTO } from 'src/core/interfaces/response.data.dto';
 @Injectable()
 export class CommerceOfficesDetNsbddbService {
     constructor(

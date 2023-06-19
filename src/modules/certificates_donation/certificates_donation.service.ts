@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
-import { CRUDMessages, ResponseDataDTO } from 'sigebi-lib-common';
 import { Repository } from 'typeorm';
 import { CommonFiltersService } from '../commonFiltersService/common-filters.service';
 import { certificatesDonationDto } from './dto/certificates_donation.dto';
 import { certificatesDonationIdDto } from './dto/certificates_donation_id.dto';
 import { certificatesDonationEntity } from './entities/certificates_donation.entity';
+import { CRUDMessages } from 'src/shared/utils/message.enum';
 
 
 @Injectable()
