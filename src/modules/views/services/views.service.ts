@@ -5,10 +5,10 @@ https://docs.nestjs.com/providers#services
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateQuery } from 'nestjs-paginate';
-import { ResponseDataDTO } from 'sigebi-lib-common';
 import { CommonFilterService } from 'src/shared/service/common-filter.service';
 import { Repository } from 'typeorm';
 import { DevolutionConstancyViewEntity } from '../entities/devolution-constancy-view.entity';
+import { ResponseDataDTO } from 'src/core/interfaces/response.data.dto';
 
 
 @Injectable()

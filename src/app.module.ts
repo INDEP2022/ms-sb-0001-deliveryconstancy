@@ -6,8 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import * as path from 'path';
-import { configService } from 'sigebi-lib-common';
 import { ConfigModule } from '@nestjs/config';
+import { configService } from './shared/config/config.service';
 
 
 @Module({
