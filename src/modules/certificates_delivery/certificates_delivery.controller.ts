@@ -5,6 +5,9 @@ import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { certificatesDeliveryService } from './certificates_delivery.service';
 import { certificatesDeliveryDto } from './dto/certificates_delivery.dto';
 import { certificatesDeliveryIdDto } from './dto/certificates_delivery_Id.dto';
+import { IJWTPayload } from 'src/shared/auth/interfaces/jwt-payload.interface';
+import { GetAuthUser } from 'src/shared/auth/decorator/get-auth-user.decorator';
+import * as moment from 'moment-timezone';
 
 @Controller('certificates-delivery')
 @ApiTags('constancias_entrega')
@@ -30,90 +33,90 @@ export class CertificatesDeliveryController {
     }
 
 
-   //certificatesDelivery
-   @ApiOperation({ summary: 'Consulta todos los certificatesDelivery' })
-   @ApiResponse({
-       status: 200,
-       /*TODO: Cambiar DTO*/
-       type: [certificatesDeliveryDto]
-   })
-   @ApiQuery({
-       name: "page",
-       description: 'Número de página',
-       type: Number,
-       required: false
-   })
-   @ApiQuery({
-       name: "limit",
-       description: 'Limite de elementos, si el limite es 0 traera todos los elementos',
-       type: Number,
-       required: false
-   })
-   @Get()
-   async certificatesDelivery(@Paginate() query: PaginateQuery) {
-       return this.service.certificatesDelivery(query);
-   }
+    //certificatesDelivery
+    @ApiOperation({ summary: 'Consulta todos los certificatesDelivery' })
+    @ApiResponse({
+        status: 200,
+        /*TODO: Cambiar DTO*/
+        type: [certificatesDeliveryDto]
+    })
+    @ApiQuery({
+        name: "page",
+        description: 'Número de página',
+        type: Number,
+        required: false
+    })
+    @ApiQuery({
+        name: "limit",
+        description: 'Limite de elementos, si el limite es 0 traera todos los elementos',
+        type: Number,
+        required: false
+    })
+    @Get()
+    async certificatesDelivery(@Paginate() query: PaginateQuery) {
+        return this.service.certificatesDelivery(query);
+    }
 
-  
 
-   @ApiOperation({ summary: 'Dar de alta un certificates-delivery' })
-   @ApiResponse({
-       status: 200,
-       /*TODO: Cambiar DTO*/
-       type: [certificatesDeliveryDto]
-   })
-   @ApiBody({
-       description: "Cuerpor de la los datos a guardar",
-       type: [certificatesDeliveryDto],
-       required: true
-   })
-   @Post()
-   async certificatesDeliveryPost(@Body() body: certificatesDeliveryDto) {
-       return this.service.certificatesDeliveryPost(body);
-   }
 
-   @ApiOperation({ summary: 'Actualizar un certificates-delivery' })
-   @ApiResponse({
-       status: 200,
-       /*TODO: Cambiar DTO*/
-       type: [certificatesDeliveryDto]
-   })
-   @ApiBody({
-       description: "Cuerpor de la los datos a actualizar, incluye ID",
-       type: [certificatesDeliveryDto],
-       required: true
-   })
-   @ApiParam({
-    name: "certificateId",
-    description: "Id del certificates-delivery a buscar",
-    type: Number,
-    required: true
-})
-   @Put("/:certificateId")
-   async certificatesDeliveryPut(@Body() body: certificatesDeliveryDto, @Param() id: certificatesDeliveryIdDto) {
-    if(id.certificateId!=body.certificateId)
-            return{
+    @ApiOperation({ summary: 'Dar de alta un certificates-delivery' })
+    @ApiResponse({
+        status: 200,
+        /*TODO: Cambiar DTO*/
+        type: [certificatesDeliveryDto]
+    })
+    @ApiBody({
+        description: "Cuerpor de la los datos a guardar",
+        type: [certificatesDeliveryDto],
+        required: true
+    })
+    @Post()
+    async certificatesDeliveryPost(@Body() body: certificatesDeliveryDto, @GetAuthUser() authUser: IJWTPayload) {
+        return this.service.certificatesDeliveryPost(body, authUser);
+    }
+
+    @ApiOperation({ summary: 'Actualizar un certificates-delivery' })
+    @ApiResponse({
+        status: 200,
+        /*TODO: Cambiar DTO*/
+        type: [certificatesDeliveryDto]
+    })
+    @ApiBody({
+        description: "Cuerpor de la los datos a actualizar, incluye ID",
+        type: [certificatesDeliveryDto],
+        required: true
+    })
+    @ApiParam({
+        name: "certificateId",
+        description: "Id del certificates-delivery a buscar",
+        type: Number,
+        required: true
+    })
+    @Put("/:certificateId")
+    async certificatesDeliveryPut(@Body() body: certificatesDeliveryDto, @Param() id: certificatesDeliveryIdDto, @GetAuthUser() authUser: IJWTPayload) {
+        if (id.certificateId != body.certificateId)
+            return {
                 statusCode: HttpStatus.BAD_REQUEST,
                 message: "El certificateId en el enlace http y en el body no coincide ",
-            }   
-    return this.service.certificatesDeliveryPut({body,id});
-   }
+            }
+        return this.service.certificatesDeliveryPut({ body, id, authUser });
+    }
 
-   @ApiOperation({ summary: 'Eliminar un certificates-delivery por ID' })
-   @ApiResponse({
-       status: 200,
-       /*TODO: Cambiar DTO*/
-       type: [certificatesDeliveryIdDto]
-   })
-   @ApiParam({
-       name: "certificateId",
-       description: "Id del certificates-delivery a elimiar",
-       type: Number,
-       required: true
-   })
-   @Delete("/:certificateId")
-   async certificatesDeliverydelete(@Param() id: certificatesDeliveryIdDto) {
-       return this.service.certificatesDeliveryDelete(id);
-   }
+    @ApiOperation({ summary: 'Eliminar un certificates-delivery por ID' })
+    @ApiResponse({
+        status: 200,
+        /*TODO: Cambiar DTO*/
+        type: [certificatesDeliveryIdDto]
+    })
+    @ApiParam({
+        name: "certificateId",
+        description: "Id del certificates-delivery a elimiar",
+        type: Number,
+        required: true
+    })
+    @Delete("/:certificateId")
+    async certificatesDeliverydelete(@Param() id: certificatesDeliveryIdDto) {
+        return this.service.certificatesDeliveryDelete(id);
+    }
 
 }

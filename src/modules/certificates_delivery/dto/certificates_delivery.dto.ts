@@ -86,24 +86,24 @@ repLegalPosition: string;
 virtue: string;
 
 
-@IsString({ message: "userCreation debe ser una cadena " })
-@ApiProperty({ example: "userCreation" })
-userCreation: string;
+// @IsString({ message: "userCreation debe ser una cadena " })
+// @ApiProperty({ example: "userCreation" })
+// userCreation: string;
 
 
-@IsString({ message: "userModification debe ser una cadena " })
-@ApiProperty({ example: "userModification" })
-userModification: string;
+// @IsString({ message: "userModification debe ser una cadena " })
+// @ApiProperty({ example: "userModification" })
+// userModification: string;
 
 
-@IsDate({message:"El formato de fecha de creationDate debe ser AAAA-MM-DD"})
-@ApiProperty({ example: "creationDate" })
-creationDate: Date;
+// @IsDate({message:"El formato de fecha de creationDate debe ser AAAA-MM-DD"})
+// @ApiProperty({ example: "creationDate" })
+// creationDate: Date;
 
 
-@IsDate({message:"El formato de fecha de modificationDate debe ser AAAA-MM-DD"})
-@ApiProperty({ example: "modificationDate" })
-modificationDate: Date;
+// @IsDate({message:"El formato de fecha de modificationDate debe ser AAAA-MM-DD"})
+// @ApiProperty({ example: "modificationDate" })
+// modificationDate: Date;
 
 
 @IsString({ message: "closing debe ser una cadena " })
