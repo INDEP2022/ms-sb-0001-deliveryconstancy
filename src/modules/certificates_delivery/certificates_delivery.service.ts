@@ -7,7 +7,7 @@ import { CommonFiltersService } from '../commonFiltersService/common-filters.ser
 import { certificatesDeliveryDto } from './dto/certificates_delivery.dto';
 import { certificatesDeliveryIdDto } from './dto/certificates_delivery_Id.dto';
 import { certificatesDeliveryEntity } from './entities/certificates_delivery.entity';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class certificatesDeliveryService {
@@ -97,7 +97,6 @@ export class certificatesDeliveryService {
         delete body.userCreation
         body.userModification = authUser.name
         body.modificationDate = moment.utc(new Date()).tz('America/Mexico_City').format('YYYY-MM-DD HH:mm:ss')
-
         let certificateId = id.certificateId;
         try {
             const exists = await this.repository.findOne({ where: { certificateId } })

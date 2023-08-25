@@ -7,7 +7,6 @@ import { certificatesDeliveryDto } from './dto/certificates_delivery.dto';
 import { certificatesDeliveryIdDto } from './dto/certificates_delivery_Id.dto';
 import { IJWTPayload } from 'src/shared/auth/interfaces/jwt-payload.interface';
 import { GetAuthUser } from 'src/shared/auth/decorator/get-auth-user.decorator';
-import * as moment from 'moment-timezone';
 
 @Controller('certificates-delivery')
 @ApiTags('constancias_entrega')
