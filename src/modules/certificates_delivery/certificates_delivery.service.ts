@@ -91,25 +91,26 @@ export class certificatesDeliveryService {
     }
 
     //============ PUT ============
-    async certificatesDeliveryPut({ body, id, authUser }) {
+    async certificatesDeliveryPut({ body, authUser }) {
 
         delete body.creationDate
         delete body.userCreation
         body.userModification = authUser.name
         body.modificationDate = moment.utc(new Date()).tz('America/Mexico_City').format('YYYY-MM-DD HH:mm:ss')
-        let certificateId = id.certificateId;
+        const certificateId = body.certificateId;
         try {
-            const exists = await this.repository.findOne({ where: { certificateId } })
-            if (!exists)
+            const exists = await this.repository.findOne({ where: { certificateId: certificateId } })
+            if (!exists) {
                 return {
                     statusCode: HttpStatus.BAD_REQUEST,
                     message: 'No existe un registro con este Id',
                     count: 0,
                     data: []
                 }
+            }
 
             delete body.certificateId;
-            const data = await this.repository.update(certificateId, body)
+            const data = await this.repository.update({ certificateId: certificateId }, body)
 
             if (data)
                 return {
@@ -125,7 +126,7 @@ export class certificatesDeliveryService {
         catch (error) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-                message: "Ocurrio un error al intentar obtener los datos.",
+                message: error.message,
             }
         }
     }

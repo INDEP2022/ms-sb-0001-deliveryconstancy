@@ -93,12 +93,8 @@ export class CertificatesDeliveryController {
     })
     @Put("/:certificateId")
     async certificatesDeliveryPut(@Body() body: certificatesDeliveryDto, @Param() id: certificatesDeliveryIdDto, @GetAuthUser() authUser: IJWTPayload) {
-        if (id.certificateId != body.certificateId)
-            return {
-                statusCode: HttpStatus.BAD_REQUEST,
-                message: "El certificateId en el enlace http y en el body no coincide ",
-            }
-        return this.service.certificatesDeliveryPut({ body, id, authUser });
+        body.certificateId = id .certificateId
+        return this.service.certificatesDeliveryPut({ body, authUser });
     }
 
     @ApiOperation({ summary: 'Eliminar un certificates-delivery por ID' })
