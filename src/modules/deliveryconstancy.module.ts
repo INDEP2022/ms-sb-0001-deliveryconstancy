@@ -9,9 +9,10 @@ import { CertificatesDonationModule } from './certificates_donation/certificates
 import { CertificatesGoodsModule } from './certificates_goods/certificates_goods.module';
 import { CommerceOfficesDetNsbddbModule } from './commerce_offices_det_nsbddb/commerce_offices_det_nsbddb.module';
 import { CertificatesDeliveryModule } from './certificates_delivery/certificates_delivery.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
-      imports: [ViewsModule,ComerOfeEnvValueNsbddbModule, CertificatesDonationModule, CertificatesGoodsModule, CommerceOfficesDetNsbddbModule, CertificatesDeliveryModule],
+      imports: [ViewsModule,ComerOfeEnvValueNsbddbModule, CertificatesDonationModule, CertificatesGoodsModule, CommerceOfficesDetNsbddbModule, CertificatesDeliveryModule, ApplicationModule],
 
 })
 export class DeliveryconstancyModule { }
