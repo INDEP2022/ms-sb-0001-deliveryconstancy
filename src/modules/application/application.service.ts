@@ -1,18 +1,24 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { QueryGoodTrackerDto } from './dto/query-good-tracker.dto';
+import { ClientProxy } from '@nestjs/microservices';
+import { lastValueFrom } from 'rxjs';
+import { QueryApplicationDto } from './dto/query-application.dto';
 
 @Injectable()
 export class ApplicationService {
     constructor(
-        @InjectEntityManager() private readonly entity: EntityManager
-    ) { }
+        @InjectEntityManager() private readonly entity: EntityManager,
+        @Inject('ms-sb-0001-donationgood') private readonly proxyDonationgood: ClientProxy,
+    ) {
+        this.proxyDonationgood.connect();
+    }
 
     async queryGoodTracker(dto: QueryGoodTrackerDto) {
 
         const { relGood, typeMinutes, vcScreen } = dto
-        
+
         const vc_pantalla: string = vcScreen ? vcScreen : null
         const BLK_ACT_ID_TIPO_ACTA: string = typeMinutes ? typeMinutes : null
         const global_rel_bienes: number = relGood ? +relGood : null
@@ -211,6 +217,184 @@ export class ApplicationService {
         } catch (error) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message,
+                data: [],
+            };
+        }
+    }
+
+    async queryApplication(dto: QueryApplicationDto) {
+
+        const { applicationId, formKey, minutesNumber, typeApplication, user } = dto
+
+        const USER: string = user ? user : null
+        const DONAC_SOLICITUD_ID_SOLICITUD: number = applicationId ? applicationId : null
+
+        const BLK_TOOLBAR_CVE_FORMA: string = formKey ? formKey : null
+        const DONAC_SOLICITUD_TIPO_SOLICITUD: number = typeApplication ? typeApplication : null
+        const BLK_ACT_NO_ACTA: number = minutesNumber ? minutesNumber : null
+
+        let lv_TOTREG: number = null
+        let lv_VALSOL: number = null
+        let lv_BIEPAR: number = null
+        let lv_NOBIEN: number = null
+        let lv_NOACTA: number = null
+        let lv_CANTIDAD: number = null
+
+        let validaciones = null
+
+        try {
+
+            const CURSOR_C_DATCTA = async () => {
+                return this.entity.query(
+                    `select
+                        count(0) as count
+                    from
+                        sera.TMP_BIEN_AUT_DONACION
+                    where
+                        USUARIO_REG = ${USER ? `'${USER}'` : null}`
+                )
+            }
+
+            const CURSOR_C_VALSOL = async () => {
+                return this.entity.query(
+                    `select
+                        count(0) as count
+                    from
+                        sera.DONAC_SOLICITUD_BIEN
+                    where
+                        ID_SOLICITUD = ${DONAC_SOLICITUD_ID_SOLICITUD}`
+                )
+            }
+
+            const CURSOR_C_BIEPAR = async () => {
+                return this.entity.query(
+                    `select
+                        COUNT(0) as count
+                    from
+                        sera.TMP_BIEN_AUT_DONACION
+                    where
+                        USUARIO_REG = user
+                        and VAL_PARCIAL = 1
+                        and ID_SOLICITUD = ${DONAC_SOLICITUD_ID_SOLICITUD}`
+                )
+            }
+
+            const CURSOR_C_PARBIE = async () => {
+                return this.entity.query(
+                    `select
+                        NO_BIEN,
+                        CANTIDAD,
+                        NO_ACTA
+                    from
+                        sera.TMP_BIEN_AUT_DONACION
+                    where
+                        USUARIO_REG = ${USER ? `'${USER}'` : null}
+                        and VAL_PARCIAL = 1
+                        and ID_SOLICITUD = ${DONAC_SOLICITUD_ID_SOLICITUD}`
+                )
+            }
+
+            const C_DATCTA = await CURSOR_C_DATCTA()
+            C_DATCTA.forEach(element => {
+                lv_TOTREG = element.count ? +element.count : null
+            });
+
+            if (DONAC_SOLICITUD_ID_SOLICITUD === null) {
+                return {
+                    statusCode: HttpStatus.BAD_REQUEST,
+                    message: 'Debe elegir un número de solicitud para generar constancias',
+                    data: false
+                };
+            }
+            if (lv_TOTREG === 0) {
+                return {
+                    statusCode: HttpStatus.BAD_REQUEST,
+                    message: 'No se puede generar constancias de entrega por que no hay bienes',
+                    data: false
+                };
+            } else {
+                // if LIF_MENSAJE_SI_NO('¿Se generaran constancias de entrega, si se parcializó algún bien se genera el proceso, desea continuar?') = 'S' then
+                // SET_APPLICATION_PROPERTY(CURSOR_STYLE,'BUSY');
+                const C_VALSOL = await CURSOR_C_VALSOL()
+                C_VALSOL.forEach(element => {
+                    lv_VALSOL = element.count ? +element.count : null
+                });
+                if (lv_VALSOL === 0) {
+                    return {
+                        statusCode: HttpStatus.BAD_REQUEST,
+                        message: `Las constancias para la solicitud ${DONAC_SOLICITUD_ID_SOLICITUD} fuerón generadas`,
+                        data: false
+                    };
+                } else {
+                    const C_BIEPAR = await CURSOR_C_BIEPAR()
+                    C_BIEPAR.forEach(element => {
+                        lv_BIEPAR = element.count ? +element.count : null
+                    });
+                    if (lv_BIEPAR > 0) {
+                        const C_PARBIE = await CURSOR_C_PARBIE()
+                        C_PARBIE.forEach(element => {
+                            lv_NOBIEN = element.no_bien ? +element.no_bien : null
+                            lv_CANTIDAD = element.cantidad ? +element.cantidad : null
+                            lv_NOACTA = element.no_acta ? +element.no_acta : null
+                        });
+                        validaciones = await lastValueFrom(
+                            this.proxyDonationgood.send(
+                                { cmd: 'paPartializeGoodDonate' },
+                                {
+                                    good: lv_NOBIEN,
+                                    screen: BLK_TOOLBAR_CVE_FORMA,
+                                    nvocand: lv_CANTIDAD,
+                                    tipproc: 1,
+                                    proceedingNumber: lv_NOACTA
+                                }
+                            ),
+                        );
+                        if (validaciones !== 200) {
+                            return validaciones
+                        }
+                    }
+                    validaciones = await lastValueFrom(
+                        this.proxyDonationgood.send(
+                            { cmd: 'paDonateReqGood' },
+                            {
+                                tipsol: DONAC_SOLICITUD_TIPO_SOLICITUD,
+                                proceedingNumber: BLK_ACT_NO_ACTA,
+                                screen: BLK_TOOLBAR_CVE_FORMA,
+                                request: DONAC_SOLICITUD_ID_SOLICITUD
+                            }
+                        ),
+                    );
+                    if (validaciones !== 200) {
+                        return validaciones
+                    }
+                    validaciones = await lastValueFrom(
+                        this.proxyDonationgood.send(
+                            { cmd: 'insGoodDonate' },
+                            {
+                                goodId: null,
+                                requestId: DONAC_SOLICITUD_TIPO_SOLICITUD,
+                                partial: null,
+                                amount: null,
+                                balanceAmoun: null,
+                                processNumber: 4
+                            }
+                        ),
+                    );
+                    if (validaciones !== 200) {
+                        return validaciones
+                    }
+                }
+            }
+
+            return {
+                statusCode: HttpStatus.OK,
+                message: 'OK',
+                data: true
+            };
+        } catch (error) {
+            return {
+                statusCode: HttpStatus.BAD_REQUEST,
                 message: error.message,
                 data: [],
             };
