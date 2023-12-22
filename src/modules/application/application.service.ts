@@ -338,6 +338,7 @@ export class ApplicationService {
                             lv_CANTIDAD = element.cantidad ? +element.cantidad : null
                             lv_NOACTA = element.no_acta ? +element.no_acta : null
                         });
+                        //PA_PARCIALIZA_BIEN_DONAR
                         validaciones = await lastValueFrom(
                             this.proxyDonationgood.send(
                                 { cmd: 'paPartializeGoodDonate' },
@@ -346,7 +347,8 @@ export class ApplicationService {
                                     screen: BLK_TOOLBAR_CVE_FORMA,
                                     nvocand: lv_CANTIDAD,
                                     tipproc: 1,
-                                    proceedingNumber: lv_NOACTA
+                                    proceedingNumber: lv_NOACTA,
+                                    user: USER
                                 }
                             ),
                         );
@@ -354,6 +356,7 @@ export class ApplicationService {
                             return validaciones
                         }
                     }
+                    //PA_DONACION_SOL_BIEN
                     validaciones = await lastValueFrom(
                         this.proxyDonationgood.send(
                             { cmd: 'paDonateReqGood' },
@@ -361,13 +364,15 @@ export class ApplicationService {
                                 tipsol: DONAC_SOLICITUD_TIPO_SOLICITUD,
                                 proceedingNumber: BLK_ACT_NO_ACTA,
                                 screen: BLK_TOOLBAR_CVE_FORMA,
-                                request: DONAC_SOLICITUD_ID_SOLICITUD
+                                request: DONAC_SOLICITUD_ID_SOLICITUD,
+                                user: USER
                             }
                         ),
                     );
                     if (validaciones !== 200) {
                         return validaciones
                     }
+                    //PA_INS_BIEN_DONAR
                     validaciones = await lastValueFrom(
                         this.proxyDonationgood.send(
                             { cmd: 'insGoodDonate' },
@@ -377,7 +382,8 @@ export class ApplicationService {
                                 partial: null,
                                 amount: null,
                                 balanceAmoun: null,
-                                processNumber: 4
+                                processNumber: 4,
+                                user: USER
                             }
                         ),
                     );
