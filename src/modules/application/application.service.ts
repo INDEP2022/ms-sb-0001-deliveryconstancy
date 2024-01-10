@@ -177,7 +177,7 @@ export class ApplicationService {
                     if (consulta3.length > 0) {
                         blk_det_di_desc_bien = consulta3[0].blk_det_di_desc_bien ? consulta3[0].blk_det_di_desc_bien : null
                     }
-
+ 
                     let blk_det_di_estatus_bien: string = null
                     const consulta4 = await this.entity.query(
                         `select
@@ -185,7 +185,7 @@ export class ApplicationService {
                         from
                             sera.estatus_bien
                         where
-                            estatus = ${ESTATUS}`
+                            estatus = ${ESTATUS ? `'${ESTATUS}'` : null}`
                     )
                     if (consulta4.length > 0) {
                         blk_det_di_estatus_bien = consulta4[0].blk_det_di_estatus_bien ? consulta4[0].blk_det_di_estatus_bien : null
