@@ -183,7 +183,7 @@ export class ApplicationService {
                         `select
                             descripcion as blk_det_di_estatus_bien
                         from
-                            sera.estatus_bien
+                            sera.estatus_bien 
                         where
                             estatus = ${ESTATUS ? `'${ESTATUS}'` : null}`
                     )
